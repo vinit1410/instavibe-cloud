@@ -1,0 +1,28 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.pdb
+*.exe
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Secrets - keep local only
+**/appsettings.Development.json
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Build outputs
+publish/
