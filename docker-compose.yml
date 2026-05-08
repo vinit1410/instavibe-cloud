@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  apigateway:
+    build: ./BE/ApiGateway
+    ports:
+      - "5000:8080"
+    depends_on:
+      - identity
+      - posts
+      - media
+      - notifications
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  identity:
+    build: ./BE/IdentityService
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=${AZURE_SQL_CONNECTION}
+      - AzureBlob__ConnectionString=${BLOB_CONNECTION}
+      - AzureBlob__ProfilePicsContainer=profile-storage
+      - Jwt__Key=super_secret_key_1234567890123456_Instagram_Clone
+      - Jwt__Issuer=InstagramClone
+      - Jwt__Audience=InstagramClone
+
+  posts:
+    build: ./BE/PostService
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - CosmosDb__AccountUri=${COSMOS_URI}
+      - CosmosDb__AccountKey=${COSMOS_KEY}
+      - CosmosDb__DatabaseName=PostsDB
+      - Jwt__Key=super_secret_key_1234567890123456_Instagram_Clone
+      - Jwt__Issuer=InstagramClone
+      - Jwt__Audience=InstagramClone
+
+  media:
+    build: ./BE/MediaService
+    ports:
+      - "5003:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - AzureBlob__ConnectionString=${BLOB_CONNECTION}
+      - AzureBlob__ProfilePicsContainer=profile-storage
+      - AzureBlob__PostImagesContainer=post-storage
+      - Jwt__Key=super_secret_key_1234567890123456_Instagram_Clone
+      - Jwt__Issuer=InstagramClone
+      - Jwt__Audience=InstagramClone
+
+  notifications:
+    build: ./BE/NotificationService
+    ports:
+      - "5004:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - CosmosDb__AccountUri=${COSMOS_URI}
+      - CosmosDb__AccountKey=${COSMOS_KEY}
+      - CosmosDb__DatabaseName=PostsDB
+      - Jwt__Key=super_secret_key_1234567890123456_Instagram_Clone
+      - Jwt__Issuer=InstagramClone
+      - Jwt__Audience=InstagramClone
+
+  frontend:
+    build: ./FE
+    ports:
+      - "3001:80"
+    depends_on:
+      - apigateway
