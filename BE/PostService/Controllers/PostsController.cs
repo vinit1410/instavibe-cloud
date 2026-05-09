@@ -16,7 +16,7 @@ namespace PostService.Controllers
         private readonly Services.IFileService _fileService;
         private static readonly HttpClient _notificationClient = new()
         {
-            BaseAddress = new Uri("http://localhost:5004")
+            BaseAddress = new Uri("https://instavibe-notification-b4gtatc8eaaxe7dd.polandcentral-01.azurewebsites.net")
         };
 
         public PostsController(CosmosDbService cosmos, Services.IFileService fileService)

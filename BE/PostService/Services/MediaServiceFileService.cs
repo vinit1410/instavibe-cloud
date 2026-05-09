@@ -11,7 +11,7 @@ namespace PostService.Services
         {
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("http://localhost:5003")
+                BaseAddress = new Uri("https://instavibe-media-gncvahdtbed3egg4.polandcentral-01.azurewebsites.net")
             };
         }
 

@@ -154,7 +154,7 @@ namespace IdentityService.Controllers
                        Message = "started following you.",
                        CreatedAt = DateTime.UtcNow
                    };
-                   await client.PostAsJsonAsync("http://localhost:5004/api/notifications", notif);
+                   await client.PostAsJsonAsync("https://instavibe-notification-b4gtatc8eaaxe7dd.polandcentral-01.azurewebsites.net/api/notifications", notif);
                 } catch { /* Ignore if post service is down */ }
 
                 await _context.SaveChangesAsync();
